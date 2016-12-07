@@ -1,0 +1,20 @@
+body {
+	margin: 0;
+}
+.SChMap{
+	z-index: 1;
+	position: relative;
+	height: 420 px;
+	width: 450 px;
+	margin: 0;
+}
+
+.SChPoint{
+	z-index: 2;
+	position: absolute;
+	background-repeat: no-repeat;
+}
+
+.SChPoint:hover{
+	cursor: pointer;
+}
