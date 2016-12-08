@@ -1,4 +1,12 @@
 <?php
+	/*
+	Plugin Name: WP Game Map
+	Plugin URI: https://www.sebastianchinowski.pl/
+	Description: Manage points on map and connections between them.
+	Version: 0.1
+	Author: Sebastian Chinowski
+	Author URI:  https://www.sebastianchinowski.pl/
+	*/
 	include 'map.class.php';
 	$map = new SCh_Map;
 ?>
