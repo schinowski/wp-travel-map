@@ -90,14 +90,14 @@ function imagepatternedline($image, $xstart, $ystart, $xend, $yend, $color, $thi
 
 /*----------  Main  ----------*/
 
-$filename = $img['url'];
+$file = $img['url'];
 
-switch(pathinfo($filename)['extension']){
-	case "jpg": $image = @imagecreatefromjpeg($filename);
+switch(pathinfo($file)['extension']){
+	case "jpg": $image = @imagecreatefromjpeg($file);
 	break;
-	case "jpeg": $image = @imagecreatefromjpeg($filename);
+	case "jpeg": $image = @imagecreatefromjpeg($file);
 	break;
-	case "png": $image = @imagecreatefrompng($filename);
+	case "png": $image = @imagecreatefrompng($file);
 	break;
 }
 

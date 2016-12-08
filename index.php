@@ -9,10 +9,10 @@
 	</head>
 	<body>
 		<div class="SChMap">
-		<map name="connectors">
-			<area shape="poly" coords="0,0,10,0,5,10" href="#" alt="tutaj">
-		</map>
-		<?php $map->SCh_print_map();
+		
+		<?php 
+		$map->SCh_print_connections();
+		$map->SCh_print_map();
 		?>
 		</div>
 	</body>
