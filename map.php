@@ -1,10 +1,12 @@
 <?php
+/*----------  Init map object  ----------*/
 
 include 'map.class.php';
 $map = new SCh_Map;
 $points = $map->SCh_get_points();
 $img = $map->SCh_get_img();
-/*----------  Functions  ----------*/
+
+/*----------  Functions printing lines  ----------*/
 
 function imagelinethick($image, $x1, $y1, $x2, $y2, $color, $thick = 1)
 {
@@ -31,7 +33,8 @@ function imagelinethick($image, $x1, $y1, $x2, $y2, $color, $thick = 1)
     return imagepolygon($image, $points, 4, $color);
 }
 
-function imagepatternedline($image, $xstart, $ystart, $xend, $yend, $color, $thickness=1, $pattern="11000011") { 
+function imagepatternedline($image, $xstart, $ystart, $xend, $yend, $color, $thickness=1, $pattern="11110000") 
+{ 
    $pattern=(!strlen($pattern)) ? "1" : $pattern; 
    $x=$xend-$xstart; 
    $y=$yend-$ystart; 
@@ -88,7 +91,7 @@ function imagepatternedline($image, $xstart, $ystart, $xend, $yend, $color, $thi
    } 
 } 
 
-/*----------  Main  ----------*/
+/*----------  Determine file format  ----------*/
 
 $file = $img['url'];
 
@@ -101,20 +104,32 @@ switch(pathinfo($file)['extension']){
 	break;
 }
 
+/*----------  Define colors  ----------*/
+
 $black = imagecolorallocate($image, 0,0,0);
+$white = imagecolorallocate($image, 255,255,255);
+$red = imagecolorallocate($image, 255,0,0);
+$green = imagecolorallocate($image, 0,255,0);
+$blue = imagecolorallocate($image, 0,0,255);
+
+/*----------  Generate connections  ----------*/
 
 foreach($map->SCh_get_connections() as $connection){
-
-	if($connection['dotted']){
-		imagepatternedline($image, $points[$connection['from']]['x'], $points[$connection['from']]['y'], $points[$connection['to']]['x'], $points[$connection['to']]['y'], $black, 2, 11110000);
-	}else{
-		imagelinethick($image, $points[$connection['from']]['x'], $points[$connection['from']]['y'], $points[$connection['to']]['x'], $points[$connection['to']]['y'], $black, 2);
-	}
-	
+  if($connection['active']){
+  	if($connection['dotted']){
+  		imagepatternedline($image, $points[$connection['from']]['x'], $points[$connection['from']]['y'], $points[$connection['to']]['x'], $points[$connection['to']]['y'], ${$connection['color']}, $connection['thickness'], $connection['pattern']);
+  	} else {
+  		imagelinethick($image, $points[$connection['from']]['x'], $points[$connection['from']]['y'], $points[$connection['to']]['x'], $points[$connection['to']]['y'], ${$connection['color']}, $connection['thickness']);
+  	}	
+  }
 }
 
+/*----------  Generate image  ----------*/
 
 header ('Content-Type: image/png');
 imagepng($image);
+
+/*----------  Free the memory  ----------*/
+
 imagedestroy($image);
 ?>

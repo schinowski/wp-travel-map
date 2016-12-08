@@ -99,36 +99,66 @@ class SCh_Map {
 					'to'     => 2,
 					'dotted' => false,
 					'url' => '#test1',
+					'color' => 'black',
+					'thickness' => 2,
+					'pattern' => '11110000',
+					'active' => true,
+					'clickable' => true,
 					),
 				array(
 					'from'   => 1,
 					'to'     => 2,
 					'dotted' => true,
 					'url' => '#test2',
+					'color' => 'black',
+					'thickness' => 2,
+					'pattern' => '11110000',
+					'active' => true,
+					'clickable' => true,
 					),
 				array(
 					'from'   => 3,
 					'to'     => 1,
 					'dotted' => true,
 					'url' => '#test3',
+					'color' => 'black',
+					'thickness' => 2,
+					'pattern' => '11110000',
+					'active' => true,
+					'clickable' => true,
 					),
 				array(
 					'from'   => 3,
 					'to'     => 2,
 					'dotted' => false,
 					'url' => '#test4',
+					'color' => 'black',
+					'thickness' => 2,
+					'pattern' => '11110000',
+					'active' => true,
+					'clickable' => true,
 					),
 				array(
 					'from'   => 4,
 					'to'     => 5,
 					'dotted' => true,
 					'url' => '#test4',
+					'color' => 'black',
+					'thickness' => 2,
+					'pattern' => '11110000',
+					'active' => true,
+					'clickable' => true,
 					),
 				array(
 					'from'   => 2,
 					'to'     => 5,
 					'dotted' => true,
 					'url' => '#test4',
+					'color' => 'black',
+					'thickness' => 2,
+					'pattern' => '11110000',
+					'active' => true,
+					'clickable' => true,
 					),
 				),
 			];
@@ -143,20 +173,22 @@ class SCh_Map {
 
 	private function SCh_generate_points(){
 		foreach($this->points as $point){
-			?>
-				<div id="<?php echo $point['id']; ?>" class="SChPoint" onclick="alert('<?php echo $point['title'];?>')" style="top: <?php echo ($point['y'] - ($point['icon']['height'])/2);?>px; left: <?php echo ($point['x'] - ($point['icon']['width'])/2);?>px; background-image:url('<?php echo $point['icon']['url'];?>'); padding-left: <?php echo ($point['icon']['width'] + 5); ?>px;"/><?php echo $point['title'];?></div>
-			<?php
-			}
+		?>
+			<div id="<?php echo $point['id']; ?>" class="SChPoint" onclick="alert('<?php echo $point['title'];?>')" style="top: <?php echo ($point['y'] - ($point['icon']['height'])/2);?>px; left: <?php echo ($point['x'] - ($point['icon']['width'])/2);?>px; background-image:url('<?php echo $point['icon']['url'];?>'); padding-left: <?php echo ($point['icon']['width'] + 5); ?>px;"/><?php echo $point['title'];?></div>
+		<?php
+		}
 	}
 
 	public function SCh_print_connections(){
 
 		echo '<map name="connectors">';
 		foreach($this->connections as $connection){
+			if($connection['clickable']){
 			$coords = ($this->points[$connection['from']]['x'] - 5).',	'.($this->points[$connection['from']]['y'] - 5).', '.($this->points[$connection['from']]['x'] + 5).', '.($this->points[$connection['from']]['y'] + 5).', '.($this->points[$connection['to']]['x'] + 5).', '.($this->points[$connection['to']]['y'] + 5).', '.($this->points[$connection['to']]['x'] - 5).', '.($this->points[$connection['to']]['y'] - 5);
 		?>
 			<area shape="poly" class="SChConnection" coords="<?php echo $coords; ?>" href="<?php echo $connection['url'];?>" alt="tutaj">
 		<?php
+			}
 		}
 		echo '</map>';
 	}
